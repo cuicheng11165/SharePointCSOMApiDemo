@@ -46,10 +46,12 @@ namespace CSOM_File_Add_Test
             //The proper way to set a value or default value for a managed metadata column is to resolve the term from the site first. 
             //This will ensure the term label exists in the site's TaxonomyHiddenList and will avoid the lazy-load behavior
 
-            TaxonomyFieldValue mmFieldValue = new TaxonomyFieldValue();
-            mmFieldValue.WssId = -1;
-            mmFieldValue.TermGuid = targetTerm.Id.ToString();
-            mmFieldValue.Label = targetTerm.Name;
+            TaxonomyFieldValue mmFieldValue = new TaxonomyFieldValue
+            {
+                WssId = -1,
+                TermGuid = targetTerm.Id.ToString(),
+                Label = targetTerm.Name
+            };
 
             TaxonomyField mmColumn = context.CastTo<TaxonomyField>(column);
 

@@ -1,4 +1,6 @@
 ﻿using CSOM.Common;
+using RestApiTest;
+
 class LoopContainer : RestApibase
 {
     public void AddSPOContainerUserRole()

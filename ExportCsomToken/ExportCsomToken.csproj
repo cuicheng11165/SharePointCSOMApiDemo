@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Identity.Client" Version="4.77.0" />
-    <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.27518.12000" />
+    <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.26510.12000" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 
-var token = EnvConfig.GetToken();
+var token = EnvConfig.GetCsomToken();
 var siteRelativeUrl = "/contentstorage/CSP_f546b571-77f3-46c7-b8cb-e491cf3e3280";
 siteRelativeUrl = "/sites/site202503311557";
 

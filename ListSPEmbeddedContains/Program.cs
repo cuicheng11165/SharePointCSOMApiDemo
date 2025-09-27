@@ -23,7 +23,7 @@ var owningContainerTypes=tenant.GetSPOContainerTypes(SPContainerTypeTenantType.O
 context.ExecuteQuery();
 
 
-var containers = tenant.GetSPOContainersByApplicationId(loopApplicationId, false, "");
+var containers = tenant.GetSPOContainersByApplicationId(loopApplicationId, false, "", SPContainerArchiveStatusFilterProperties.NotArchived);
 context.ExecuteQuery();
 
 foreach (var containerProperty in containers.Value.ContainerCollection)

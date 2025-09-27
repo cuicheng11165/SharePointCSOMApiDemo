@@ -30,7 +30,7 @@ namespace TenantApiTest
             context.ExecuteQuery();
 
 
-            var containers = tenant.GetSPOContainersByApplicationId(new Guid("a187e399-0c36-4b98-8f04-1edc167a0996"), false, "");
+            var containers = tenant.GetSPOContainersByApplicationId(new Guid("a187e399-0c36-4b98-8f04-1edc167a0996"), false, "",SPContainerArchiveStatusFilterProperties.NotArchived);
 
             context.ExecuteQuery();
 

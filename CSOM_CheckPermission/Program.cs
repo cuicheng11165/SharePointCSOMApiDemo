@@ -1,10 +1,4 @@
-﻿using Microsoft.SharePoint.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace CSOM_CheckPermission
 {
@@ -12,28 +6,11 @@ namespace CSOM_CheckPermission
     {
         static void Main(string[] args)
         {
-            ClientContext context = new ClientContext("https://bigapp.sharepoint.com/sites/simmon1456");
-
-         
-
-        
-            
-            context.Web.CreateDefaultAssociatedGroups("i:0#.f|membership|simmon@baron.space","i:0#.f|membership|simmon@baron.space","AAAA");
-            context.ExecuteQuery();
-
-            var basePermission = context.Web.GetUserEffectivePermissions("i:0#.f|membership|simmon@baron.space");
-            context.ExecuteQuery();
-            
-            
-
-            var contributorType = context.Web.RoleDefinitions.GetByType(RoleType.Contributor);
-
-            context.Load(contributorType);
-            context.ExecuteQuery();
-
-            var checkHigh = basePermission.Value.HasPermissions(48, 134287360);
-
-
+            string siteUrl = "https://bigapp.sharepoint.com/sites/simmon1456";
+            string userLoginName = "i:0#.f|membership|simmon@baron.space";
+            CheckPermissionScenarios.CreateDefaultGroups(siteUrl, userLoginName);
+            Console.WriteLine("Permission check completed.");
+            Console.ReadLine();
         }
     }
 }

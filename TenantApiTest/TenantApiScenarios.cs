@@ -346,6 +346,31 @@ namespace TenantApiTest
             }
         }
 
+        internal static void DemoAddSPOContainerRole()
+        {
+            var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
+
+            ClientContext context = new ClientContext(adminCenterUrl);
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
+
+            Tenant tenant = new Tenant(context);
+
+            try
+            {
+                tenant.AddSPOContainerRole("containerId", "loginName", "owner");
+
+                context.ExecuteQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"DemoGetDeletedSiteProperties failed: {ex.Message}");
+            }
+        }
+
         internal static void DemoEncodeClaim()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();

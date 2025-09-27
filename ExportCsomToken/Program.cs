@@ -56,16 +56,19 @@ namespace ExportCsomTokenTest
             Console.ReadLine();
         }
 
+        
         private static X509Certificate2 FindCertificateByThumbprint(string thumbprint)
         {
-            using (var store = new X509Store(StoreName.My, StoreLocation.CurrentUser))
+            // Assume the PFX file path is stored in Config/Certificate.pfx and password in Config/CertificatePassword.txt
+            string pfxPath = EnvConfig.GetConfigFile("Certificate.pfx");
+            string password = System.IO.File.ReadAllText(EnvConfig.GetConfigFile("CertificatePassword.txt")).Trim();
+
+            var cert = new X509Certificate2(pfxPath, password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.PersistKeySet);
+
+            // Optionally check thumbprint
+            if (string.Equals(cert.Thumbprint, thumbprint, StringComparison.OrdinalIgnoreCase))
             {
-                store.Open(OpenFlags.ReadOnly);
-                var certs = store.Certificates.Find(X509FindType.FindByThumbprint, thumbprint, false);
-                if (certs.Count > 0)
-                {
-                    return certs[0];
-                }
+            return cert;
             }
             return null;
         }

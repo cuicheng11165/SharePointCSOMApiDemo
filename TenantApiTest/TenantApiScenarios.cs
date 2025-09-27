@@ -159,6 +159,7 @@ namespace TenantApiTest
             throw new NotImplementedException();
         }
 
+        // Demonstrates fetching whether the tenant public CDN is enabled
         internal static void DemoGetTenantCdnEnabled()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
@@ -172,6 +173,7 @@ namespace TenantApiTest
             Console.WriteLine($"Public CDN enabled: {enabledResult.Value}");
         }
 
+        // Demonstrates retrieving the tenant public CDN origin list
         internal static void DemoGetTenantCdnOrigins()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
@@ -196,6 +198,7 @@ namespace TenantApiTest
             }
         }
 
+        // Demonstrates retrieving the tenant public CDN policy collection
         internal static void DemoGetTenantCdnPolicies()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
@@ -212,6 +215,7 @@ namespace TenantApiTest
             }
         }
 
+        // Demonstrates retrieving site properties by site ID
         internal static void DemoGetSitePropertiesBySiteId()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
@@ -234,6 +238,7 @@ namespace TenantApiTest
             Console.WriteLine($"Site URL: {siteProperties.Url}");
         }
 
+        // Demonstrates listing all web templates available to the tenant
         internal static void DemoGetSPOTenantAllWebTemplates()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
@@ -258,6 +263,7 @@ namespace TenantApiTest
             }
         }
 
+        // Demonstrates retrieving site properties by site URL
         internal static void DemoGetSitePropertiesByUrl()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
@@ -287,6 +293,7 @@ namespace TenantApiTest
             }
         }
 
+        // Demonstrates inspecting deleted site information by URL
         internal static void DemoGetDeletedSitePropertiesByUrl()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
@@ -316,6 +323,7 @@ namespace TenantApiTest
             }
         }
 
+        // Demonstrates enumerating deleted sites across the tenant
         internal static void DemoGetDeletedSiteProperties()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
@@ -346,6 +354,7 @@ namespace TenantApiTest
             }
         }
 
+        // Demonstrates adding a role assignment to an SPO container
         internal static void DemoAddSPOContainerRole()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
@@ -371,6 +380,7 @@ namespace TenantApiTest
             }
         }
 
+        // Demonstrates encoding a user identity via the Tenant API
         internal static void DemoEncodeClaim()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();
@@ -397,6 +407,7 @@ namespace TenantApiTest
             }
         }
 
+        // Demonstrates decoding a user identity via the Tenant API
         internal static void DemoDecodeClaim()
         {
             var adminCenterUrl = EnvConfig.GetAdminCenterUrl();

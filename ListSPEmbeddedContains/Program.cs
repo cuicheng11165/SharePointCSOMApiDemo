@@ -11,7 +11,7 @@ ClientContext context = new ClientContext(admin);
 
 context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
 {
-    e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] = token;
+    e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] = EnvConfig.GetCsomToken();
 };
 
 var tenant = new Tenant(context);

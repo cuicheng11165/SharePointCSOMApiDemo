@@ -10,9 +10,7 @@ namespace SetComplianceTagOnBulkItemsDemo
     {
         /// <summary>
         /// Demonstrates how to call the CSOM entry point for applying a compliance tag
-
         /// to multiple files in a single request using SPPolicyStoreProxy.SetComplianceTagOnBulkItems.
-
         /// </summary>
         internal static void DemoSetComplianceTagOnBulkItems()
         {
@@ -34,27 +32,18 @@ namespace SetComplianceTagOnBulkItemsDemo
             // Each entry describes the item to label and the compliance tag metadata.
             // The anonymous type keeps the sample self-contained while matching the
             // expected shape of the bulk API payload.
-            var bulkItems = new List<object>
+            var bulkItems = new List<int>
             {
-                new
-                {
-                    // Absolute URL to the list item or file you want to label.
-                    Url = $"{siteUrl}/Shared%20Documents/Example.docx",
-                    ComplianceTagValue = "Demo Retention Label",
-                    BlockDelete = true,
-                    BlockEdit = false,
-                    SyncToItems = true,
-                    // Optional justification/comment fields accepted by the API.
-                    Comments = "Applied via sample bulk call",
-                    TagTime = DateTimeOffset.UtcNow
-                }
+                1, 2
             };
 
             // Invoke the bulk labeling API. Using dynamic arguments avoids compile-time
             // coupling to private request types while still exercising the CSOM entry point.
             var result = SPPolicyStoreProxy.SetComplianceTagOnBulkItems(
                 context,
-                bulkItems);
+                bulkItems,
+                "",
+                "");
 
             context.ExecuteQuery();
 

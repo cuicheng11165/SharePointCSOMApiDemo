@@ -1,7 +1,7 @@
 using Microsoft.SharePoint.Client;
 using System;
 
-namespace CSOM_CheckPermission
+namespace Permission
 {
     internal static class CheckPermissionScenarios
     {

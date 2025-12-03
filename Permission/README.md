@@ -1,4 +1,4 @@
-# CSOM_CheckPermission 示例说明
+# Permission 示例说明
 
 本工程主要演示以下 CSOM API 的使用：
 

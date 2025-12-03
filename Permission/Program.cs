@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CSOM_CheckPermission
+namespace Permission
 {
     class Program
     {

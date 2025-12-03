@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CamlQueryTest", "SharePoint
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateConflictSample", "UpdateConlictSample\UpdateConflictSample.csproj", "{B4CDD0B8-0FEA-4183-8F00-17FAC42C4A8F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSOM_CheckPermission", "CSOM_CheckPermission\CSOM_CheckPermission.csproj", "{7ECFDF70-C723-4B9F-9370-BDD5059E3F37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission", "Permission\Permission.csproj", "{7ECFDF70-C723-4B9F-9370-BDD5059E3F37}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TenantApiTest", "TenantApiTest\TenantApiTest.csproj", "{5A7302C3-C28F-4A1D-BEC4-C2F657FE4941}"
 EndProject

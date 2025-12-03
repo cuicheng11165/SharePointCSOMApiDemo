@@ -6,7 +6,7 @@ This repository contains demo and utility projects for working with SharePoint O
 ## Key Components & Structure
 - **Authentication & Token Export**: `ExportCsomToken/`, `ExportGraphToken/`, `ExportGraphDelegateToken/` handle authentication and token export for CSOM and Graph APIs. Config values are in `Config/`.
 - **Configuration**: `Configuration/` contains shared config logic and project references.
-- **Scenario Demos**: Each folder (e.g., `CSOM File Add Test/`, `CSOM_CheckPermission/`, `CSOM_View_Test/`, `UpdateConlictSample/`) demonstrates a specific SharePoint CSOM use case.
+- **Scenario Demos**: Each folder (e.g., `CSOM File Add Test/`, `Permission/`, `CSOM_View_Test/`, `UpdateConlictSample/`) demonstrates a specific SharePoint CSOM use case.
 - **Test Projects**: Some folders (e.g., `CSOM_ExceptionHandlingScope_Test/`, `TimeZoneTest/`) are for testing or illustrating API behaviors.
 
 ## Developer Workflows

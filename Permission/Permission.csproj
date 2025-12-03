@@ -2,8 +2,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>CSOM_CheckPermission</RootNamespace>
-    <AssemblyName>CSOM_CheckPermission</AssemblyName>
+    <RootNamespace>Permission</RootNamespace>
+    <AssemblyName>Permission</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>

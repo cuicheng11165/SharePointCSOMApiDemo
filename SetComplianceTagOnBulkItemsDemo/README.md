@@ -1,6 +1,8 @@
 # SetComplianceTagOnBulkItemsDemo
 
+
 该示例项目参考了 `TenantApiTest` 的结构，演示如何通过 `SPPolicyStoreProxy.SetComplianceTagOnBulkItems` 方法一次性为多个 SharePoint Online 列表项/文件设置合规性标签。
+
 
 ## 配置
 1. 在仓库根目录的 `Config` 文件夹中准备以下文件，并填入可用值：

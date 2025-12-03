@@ -10,7 +10,9 @@ namespace SetComplianceTagOnBulkItemsDemo
     {
         /// <summary>
         /// Demonstrates how to call the CSOM entry point for applying a compliance tag
+
         /// to multiple files in a single request using SPPolicyStoreProxy.SetComplianceTagOnBulkItems.
+
         /// </summary>
         internal static void DemoSetComplianceTagOnBulkItems()
         {

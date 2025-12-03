@@ -10,7 +10,9 @@ namespace SetComplianceTagOnBulkItemsDemo
     {
         /// <summary>
         /// Demonstrates how to call the CSOM entry point for applying a compliance tag
-        /// to multiple files in a single request using SetComplianceTagOnBulkItems.SetComplianceTagOnBulkItems.
+
+        /// to multiple files in a single request using SPPolicyStoreProxy.SetComplianceTagOnBulkItems.
+
         /// </summary>
         internal static void DemoSetComplianceTagOnBulkItems()
         {
@@ -50,7 +52,7 @@ namespace SetComplianceTagOnBulkItemsDemo
 
             // Invoke the bulk labeling API. Using dynamic arguments avoids compile-time
             // coupling to private request types while still exercising the CSOM entry point.
-            var result = SetComplianceTagOnBulkItems.SetComplianceTagOnBulkItems(
+            var result = SPPolicyStoreProxy.SetComplianceTagOnBulkItems(
                 context,
                 bulkItems);
 

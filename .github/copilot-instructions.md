@@ -1,41 +1,66 @@
 # Copilot Instructions for CSOM_API_Test
 
 ## Project Overview
-This repository contains demo and utility projects for working with SharePoint Online using the CSOM (Client-Side Object Model) API. Each subfolder is a self-contained C# project targeting a specific SharePoint scenario, such as authentication, file operations, taxonomy, permissions, and more.
+This repository contains standalone C# console applications demonstrating SharePoint Online CSOM and Graph API scenarios. Each folder is typically a self-contained project focusing on a specific feature (e.g., File Add, Taxonomy, Permissions).
 
-## Key Components & Structure
-- **Authentication & Token Export**: `ExportCsomToken/`, `ExportGraphToken/`, `ExportGraphDelegateToken/` handle authentication and token export for CSOM and Graph APIs. Config values are in `Config/`.
-- **Configuration**: `Configuration/` contains shared config logic and project references.
-- **Scenario Demos**: Each folder (e.g., `CSOM File Add Test/`, `Permission/`, `CSOM_View_Test/`, `UpdateConlictSample/`) demonstrates a specific SharePoint CSOM use case.
-- **Test Projects**: Some folders (e.g., `CSOM_ExceptionHandlingScope_Test/`, `TimeZoneTest/`) are for testing or illustrating API behaviors.
+## Architecture & Shared Components
+- **Standalone Projects**: Most folders (e.g., `CSOM File Add Test`, `TenantApiTest`) are independent console apps.
+- **Shared Configuration**: The `Configuration` project (namespace `CSOM.Common`) is a shared library referenced by most demos.
+- **Config Directory**: A `Config/` folder at the solution root stores runtime configuration and secrets as plain text files.
 
-## Developer Workflows
-- **Build**: Use Visual Studio or `dotnet build` on the individual `.csproj` files. Solution files (`*.sln`) group related projects but are not always required.
-- **Run**: Most projects have a `Program.cs` entry point. Run with Visual Studio or `dotnet run --project <ProjectFolder>/<ProjectName>.csproj`.
-- **Configuration**: Secrets and environment-specific values are stored in `Config/` as plain text files (e.g., `ClientId.txt`, `TenantId.txt`).
-- **Dependencies**: Managed via `packages.config` in each project. Use NuGet restore if needed.
+## Critical Developer Workflows
 
-## Project-Specific Conventions
-- **No shared library**: Most code is duplicated or copy-pasted between projects for demo isolation.
-- **Config values**: Read from `Config/` at runtime. Do not hardcode secrets.
-- **Chinese comments**: Some files contain Chinese-language comments for context.
-- **Minimal error handling**: Demos focus on API usage, not production robustness.
+### 1. Configuration Setup
+Before running any code, ensure the `Config/` directory contains the necessary files:
+- `HostName.txt`: SharePoint host (e.g., `contoso.sharepoint.com`)
+- `ClientId.txt`, `TenantId.txt`: App registration details
+- `Certificate.pfx`, `CertificatePassword.txt`: For app-only authentication
+- `UserName.txt`, `Password.txt`: For user credentials (less common)
 
-## Integration & Patterns
-- **SharePoint Online**: All code targets SharePoint Online via CSOM or Graph API.
-- **DLLs**: Some projects reference local or NuGet-provided SharePoint DLLs.
-- **No cross-project dependencies**: Each project is standalone unless explicitly referencing `Configuration/`.
+### 2. Authentication & Token Generation
+The project uses a "generate and reuse" pattern for authentication tokens:
+1.  **Run `ExportCsomToken`**: This project authenticates using the configured certificate and writes a Bearer token to `Config/CSOMAuthorization.txt`.
+2.  **Run Demo Projects**: Other projects (e.g., `TenantApiTest`) read this token via `EnvConfig.GetCsomToken()` to authenticate their `ClientContext`.
 
-## Examples
-- To test file upload: see `CSOM File Add Test/Program.cs`.
-- To test taxonomy: see `CSOM Taxonomy Field Update/`.
-- To export tokens: see `ExportCsomToken/` and `ExportGraphToken/`.
+### 3. Running Demos
+- Build the solution or individual projects.
+- Run the specific console app for the scenario you want to test.
+- **Note**: Some older demos might have hardcoded URLs. Prefer using `EnvConfig.HostName` for new code.
 
-## Tips for AI Agents
-- Always check `Config/` for required runtime values.
-- When adding a new scenario, copy an existing project as a template.
-- Keep each demo self-contained unless sharing config logic.
-- Use English for code, but Chinese comments are acceptable for explanations.
+## Coding Conventions & Patterns
 
----
-For more details, see the `README.md` or the entry point in each project folder.
+### Configuration Access
+Always use `CSOM.Common.EnvConfig` to access configuration values.
+```csharp
+using CSOM.Common;
+
+string siteUrl = EnvConfig.GetSiteUrl("/sites/mysite");
+string token = EnvConfig.GetCsomToken();
+```
+
+### CSOM Context with Bearer Token
+When initializing `ClientContext` with the pre-generated token:
+```csharp
+using (var context = new ClientContext(siteUrl))
+{
+    context.ExecutingWebRequest += (sender, e) =>
+    {
+        e.WebRequestExecutor.RequestHeaders["Authorization"] = EnvConfig.GetCsomToken();
+    };
+    // ... operations
+}
+```
+
+### Certificate Handling
+Certificates are loaded from `Config/Certificate.pfx` using the password in `Config/CertificatePassword.txt`. See `ExportCsomToken/Program.cs` for the implementation.
+
+## Integration Points
+- **SharePoint Online**: Primary target.
+- **Microsoft Graph**: Some projects (`ExportGraphToken`) demonstrate Graph API usage.
+- **Local File System**: Used heavily for config and token storage.
+
+## Language & Comments
+- Code is in C#.
+- Comments may be in English.
+- Error handling is minimal in demos; focus is on API usage.
+

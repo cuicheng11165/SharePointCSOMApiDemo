@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using Microsoft.SharePoint.Client;
+using CSOM.Common;
 
 namespace SetColumnDefaultValue
 {
@@ -8,7 +9,14 @@ namespace SetColumnDefaultValue
     {
         internal static void SetDefaultValueAndAddFile()
         {
-            using ClientContext context = new ClientContext("https://bigapp.sharepoint.com/teams/Teams202504221153");
+            var siteUrl = EnvConfig.GetSiteUrl("/teams/Teams202504221153");
+            using ClientContext context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
             var list = context.Web.Lists.GetByTitle("lib6");
             var column = list.Fields.GetByTitle("m1");

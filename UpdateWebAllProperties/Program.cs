@@ -8,6 +8,7 @@ using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using CSOM.Common;
 
 namespace UpdateWebAllProperties
 {
@@ -18,15 +19,30 @@ namespace UpdateWebAllProperties
 
 
             System.Net.ServicePointManager.ServerCertificateValidationCallback = (object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors) => true;
-            ClientContext context = new ClientContext("https://wfmrm.sharepoint.com/sites/Eira_Group_CA_03");
+            
+            var siteUrl = EnvConfig.GetSiteUrl("/sites/Eira_Group_CA_03");
+            ClientContext context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
          
 
 
-            ClientContext context1 = new ClientContext("https://wfmrm-admin.sharepoint.com");
+            var adminUrl = EnvConfig.GetAdminCenterUrl();
+            ClientContext context1 = new ClientContext(adminUrl);
+
+            context1.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
        
             var tenant = new Tenant(context1);
-            var siteProperties = tenant.GetSitePropertiesByUrl("https://wfmrm.sharepoint.com/sites/Eira_Group_CA_03", false);
+            var siteProperties = tenant.GetSitePropertiesByUrl(siteUrl, false);
             siteProperties.DenyAddAndCustomizePages = DenyAddAndCustomizePagesStatus.Disabled;
             siteProperties.Update();
             context1.ExecuteQuery();

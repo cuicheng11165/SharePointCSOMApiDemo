@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
+using CSOM.Common;
 using File = Microsoft.SharePoint.Client.File;
 
 namespace CSOM_File_Add_Test
@@ -15,7 +16,14 @@ namespace CSOM_File_Add_Test
         {
             ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
 
-            using ClientContext context = new ClientContext("https://bigapp.sharepoint.com/teams/Teams202504221153");
+            var siteUrl = EnvConfig.GetSiteUrl("/teams/Teams202504221153");
+            using ClientContext context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
             var list = context.Web.Lists.GetByTitle("m22");
             var column = list.Fields.GetByTitle("m1");
@@ -68,9 +76,16 @@ namespace CSOM_File_Add_Test
 
         internal static void AddFileWithBytes()
         {
-            using ClientContext context = new ClientContext("https://cnblogtest.sharepoint.com");
+            var siteUrl = EnvConfig.GetSiteUrl("");
+            using ClientContext context = new ClientContext(siteUrl);
 
-            Folder folder = context.Web.GetFolderByServerRelativeUrl("https://cnblogtest.sharepoint.com/Documents%20Test");
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
+
+            Folder folder = context.Web.GetFolderByServerRelativeUrl("/Documents%20Test");
 
             var newAddedFile = folder.Files.Add(new FileCreationInformation
             {
@@ -85,9 +100,16 @@ namespace CSOM_File_Add_Test
 
         internal static void AddFileWithStream()
         {
-            using ClientContext context = new ClientContext("https://cnblogtest.sharepoint.com");
+            var siteUrl = EnvConfig.GetSiteUrl("");
+            using ClientContext context = new ClientContext(siteUrl);
 
-            Folder folder = context.Web.GetFolderByServerRelativeUrl("https://cnblogtest.sharepoint.com/Documents%20Test");
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
+
+            Folder folder = context.Web.GetFolderByServerRelativeUrl("/Documents%20Test");
 
             var newAddedFile = folder.Files.Add(new FileCreationInformation
             {
@@ -102,9 +124,16 @@ namespace CSOM_File_Add_Test
 
         internal static void AddLargeFileWithStream()
         {
-            using ClientContext context = new ClientContext("https://cnblogtest.sharepoint.com");
+            var siteUrl = EnvConfig.GetSiteUrl("");
+            using ClientContext context = new ClientContext(siteUrl);
 
-            Folder folder = context.Web.GetFolderByServerRelativeUrl("https://cnblogtest.sharepoint.com/Documents%20Test");
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
+
+            Folder folder = context.Web.GetFolderByServerRelativeUrl("/Documents%20Test");
 
             using FileStream fs = new FileStream("d:\\TestObject.rar", FileMode.Open);
 
@@ -121,14 +150,28 @@ namespace CSOM_File_Add_Test
 
         internal static void AddFileWithSaveBinaryDirect()
         {
-            using ClientContext context = new ClientContext("https://cnblogtest.sharepoint.com");
+            var siteUrl = EnvConfig.GetSiteUrl("");
+            using ClientContext context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
             context.ExecuteQuery();
         }
 
         internal static void AddLargeFileWithSaveBinaryDirect()
         {
-            using ClientContext context = new ClientContext("https://cnblogtest.sharepoint.com");
+            var siteUrl = EnvConfig.GetSiteUrl("");
+            using ClientContext context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
             using FileStream fs = new FileStream("d:\\TestObject.rar", FileMode.Open);
 
@@ -139,7 +182,14 @@ namespace CSOM_File_Add_Test
 
         internal static void AddFileWithSaveBytes()
         {
-            using ClientContext context = new ClientContext("https://cnblogtest.sharepoint.com");
+            var siteUrl = EnvConfig.GetSiteUrl("");
+            using ClientContext context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
             var web = context.Web;
 
@@ -154,7 +204,14 @@ namespace CSOM_File_Add_Test
 
         internal static void AddFileWithSaveStream()
         {
-            using ClientContext context = new ClientContext("https://cnblogtest.sharepoint.com");
+            var siteUrl = EnvConfig.GetSiteUrl("");
+            using ClientContext context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
             var web = context.Web;
 
@@ -171,7 +228,14 @@ namespace CSOM_File_Add_Test
         {
             string fileName = "C:\\Users\\chengcui\\Documents\\DataLakeReader.xlsx";
 
-            using ClientContext context = new ClientContext("https://bigapp.sharepoint.com/sites/SimmonDynamicAutoTest20220908021450");
+            var siteUrl = EnvConfig.GetSiteUrl("/sites/SimmonDynamicAutoTest20220908021450");
+            using ClientContext context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
             ClientResult<long>? bytesUploaded = null;
 

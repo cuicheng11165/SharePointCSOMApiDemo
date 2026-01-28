@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.SharePoint.Client;
+using CSOM.Common;
 
 namespace CamlQueryTest
 {
@@ -23,9 +24,16 @@ namespace CamlQueryTest
 
         private static void BasicQuery()
         {
-            string siteUrl = "http://MyServer/sites/MySiteCollection";
+            string siteUrl = EnvConfig.GetSiteUrl("");
 
             ClientContext clientContext = new ClientContext(siteUrl);
+
+            clientContext.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
+
             List oList = clientContext.Web.Lists.GetByTitle("Announcements");
 
             CamlQuery camlQuery = new CamlQuery();
@@ -56,9 +64,16 @@ namespace CamlQueryTest
 
         private static void CalmQuery()
         {
-            string siteUrl = "http://win-cpqm71buqvj:1000/sites/Test";
+            string siteUrl = EnvConfig.GetSiteUrl("");
 
             ClientContext clientContext = new ClientContext(siteUrl);
+
+            clientContext.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
+
             List oList = clientContext.Web.Lists.GetByTitle("VersionTest");
 
             clientContext.Load(oList);

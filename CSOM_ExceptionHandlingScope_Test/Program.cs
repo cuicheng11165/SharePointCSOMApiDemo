@@ -5,6 +5,7 @@ using System.Net;
 using System.Security;
 using System.Text;
 using Microsoft.SharePoint.Client;
+using CSOM.Common;
 
 namespace CSOM_ExceptionHandlingScope_Test
 {
@@ -14,8 +15,14 @@ namespace CSOM_ExceptionHandlingScope_Test
         {
             ServicePointManager.ServerCertificateValidationCallback = (sender, certificate, chain, errors) => true;
 
-            using (ClientContext clientContext = new ClientContext("https://bigapp.sharepoint.com/sites/simmon1750"))
+            var siteUrl = EnvConfig.GetSiteUrl("/sites/simmon1750");
+            using (ClientContext clientContext = new ClientContext(siteUrl))
             {
+                clientContext.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+                {
+                    e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                        EnvConfig.GetCsomToken();
+                };
                
 
                 var currentWeb = clientContext.Web;

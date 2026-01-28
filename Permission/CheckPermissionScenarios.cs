@@ -1,5 +1,6 @@
 using Microsoft.SharePoint.Client;
 using System;
+using CSOM.Common;
 
 namespace Permission
 {
@@ -10,6 +11,12 @@ namespace Permission
         {
             using (ClientContext context = new ClientContext(siteUrl))
             {
+                context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+                {
+                    e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                        EnvConfig.GetCsomToken();
+                };
+
                 context.Web.CreateDefaultAssociatedGroups(userLoginName, userLoginName, "DefaultGroup");
                 context.ExecuteQuery();
                 Console.WriteLine($"Default groups created for {userLoginName}.");
@@ -21,6 +28,12 @@ namespace Permission
         {
             using (ClientContext context = new ClientContext(siteUrl))
             {
+                context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+                {
+                    e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                        EnvConfig.GetCsomToken();
+                };
+
                 var basePermission = context.Web.GetUserEffectivePermissions(userLoginName);
                 context.ExecuteQuery();
                 Console.WriteLine($"Fetched effective permissions for {userLoginName}.");
@@ -33,6 +46,12 @@ namespace Permission
         {
             using (ClientContext context = new ClientContext(siteUrl))
             {
+                context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+                {
+                    e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                        EnvConfig.GetCsomToken();
+                };
+
                 var contributorType = context.Web.RoleDefinitions.GetByType(RoleType.Contributor);
                 context.Load(contributorType);
                 context.ExecuteQuery();

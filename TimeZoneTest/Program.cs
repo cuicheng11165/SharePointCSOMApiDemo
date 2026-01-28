@@ -1,5 +1,6 @@
 using System;
 using Microsoft.SharePoint.Client;
+using CSOM.Common;
 
 #if !NET8_0_OR_GREATER
 using Microsoft.SharePoint;
@@ -20,7 +21,14 @@ namespace TimeZoneTest
         private static void TestClientAPI_Document()
         {
             Console.WriteLine("Test Client API for Document");
-            ClientContext context = new ClientContext("http://win-cpqm71buqvj:1000/sites/Test");
+            var siteUrl = EnvConfig.GetSiteUrl("");
+            ClientContext context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
             var web = context.Web;
             var file = web.GetFileByServerRelativeUrl("/sites/Test/DocumentTest/12345.txt");
@@ -46,7 +54,14 @@ namespace TimeZoneTest
         private static void TestClientAPI_ListItem()
         {
             Console.WriteLine("Test Client API for ListItem");
-            ClientContext context = new ClientContext("http://win-cpqm71buqvj:1000/sites/Test");
+            var siteUrl = EnvConfig.GetSiteUrl("");
+            ClientContext context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
             var web = context.Web;
             var list = web.Lists.GetByTitle("customList");

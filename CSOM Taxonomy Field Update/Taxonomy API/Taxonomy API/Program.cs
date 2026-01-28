@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using CSOM.Common;
 
 namespace Taxonomy_API
 {
@@ -14,7 +15,14 @@ namespace Taxonomy_API
     {
         static void Main(string[] args)
         {
-            var context = new ClientContext("https://bigapp.sharepoint.com/sites/mmstest001");
+            var siteUrl = EnvConfig.GetSiteUrl("/sites/mmstest001");
+            var context = new ClientContext(siteUrl);
+
+            context.ExecutingWebRequest += (object? sender, WebRequestEventArgs e) =>
+            {
+                e.WebRequestExecutor.WebRequest.Headers[System.Net.HttpRequestHeader.Authorization] =
+                    EnvConfig.GetCsomToken();
+            };
 
          
 
